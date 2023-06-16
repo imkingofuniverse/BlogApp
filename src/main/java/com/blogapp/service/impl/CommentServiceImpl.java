@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.blogapp.dto.CommentDto;
 import com.blogapp.entity.Comment;
 import com.blogapp.entity.Post;
+import com.blogapp.exception.CommentNotFoundException;
+import com.blogapp.exception.PostNotFoundException;
 import com.blogapp.exception.ResourceNotFoundException;
 import com.blogapp.repository.CommentRepository;
 import com.blogapp.repository.PostRepository;
@@ -28,13 +30,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto createComment(long postId, CommentDto commentDto) {
+    public CommentDto createComment(long postId, CommentDto commentDto) throws PostNotFoundException {
 
         Comment comment = mapToEntity(commentDto);
 
-        // retrieve post entity by id
+     // retrieve post entity by id
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new ResourceNotFoundException("Post", "id", postId));
+                () -> new PostNotFoundException("Post not found for post ID: " + postId));
 
         // set post to comment entity
         comment.setPost(post);
@@ -55,27 +57,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto getCommentById(Long postId, Long commentId) {
-        // retrieve post entity by id
+    public CommentDto getCommentById(Long postId, Long commentId) throws CommentNotFoundException, PostNotFoundException {
+    	// retrieve post entity by id
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new ResourceNotFoundException("Post", "id", postId));
+                () -> new PostNotFoundException("Post not found for post ID: " + postId));
 
         // retrieve comment by id
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
-                new ResourceNotFoundException("Comment", "id", commentId));
+                new CommentNotFoundException("Comment not found for comment ID: " + commentId));
 
         return mapToDTO(comment);
     }
 
     @Override
-    public CommentDto updateComment(Long postId, long commentId, CommentDto commentRequest) {
-        // retrieve post entity by id
+    public CommentDto updateComment(Long postId, long commentId, CommentDto commentRequest) throws CommentNotFoundException, PostNotFoundException {
+    	// retrieve post entity by id
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new ResourceNotFoundException("Post", "id", postId));
+                () -> new PostNotFoundException("Post not found for post ID: " + postId));
 
         // retrieve comment by id
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
-                new ResourceNotFoundException("Comment", "id", commentId));
+                new CommentNotFoundException("Comment not found for comment ID: " + commentId));
         
 
         comment.setName(commentRequest.getName());
@@ -87,14 +89,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(Long postId, Long commentId) {
+    public void deleteComment(Long postId, Long commentId) throws CommentNotFoundException, PostNotFoundException {
         // retrieve post entity by id
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new ResourceNotFoundException("Post", "id", postId));
+                () -> new PostNotFoundException("Post not found for post ID: " + postId));
 
         // retrieve comment by id
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
-                new ResourceNotFoundException("Comment", "id", commentId));
+                new CommentNotFoundException("Comment not found for comment ID: " + commentId));
 
         commentRepository.delete(comment);
     }
@@ -117,7 +119,28 @@ public class CommentServiceImpl implements CommentService {
 
 
 
+/*
+ * 
+ * @Override
+	public UserDto updateUser(UserDto userDto, Long userId) throws UserNotFoundException {
+		Optional<User> user = userRepo.findById(userId);
+		try {
+			if (user.isPresent()) {
+				user.get().setName(userDto.getName());
+				user.get().setEmail(userDto.getEmail());
+				user.get().setPassword(userDto.getPassword());
+				User updatedUser = this.userRepo.save(user.get());
+				return this.userToDto(updatedUser);
+			} else {
+				throw new UserNotFoundException();
+			}
+		} catch (UserNotFoundException e) {
+			throw new UserNotFoundException("User not found for user ID: " + userId);
+		}
 
+	}
+ * 
+ */
 
 
 
