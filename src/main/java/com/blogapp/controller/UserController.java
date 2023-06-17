@@ -2,6 +2,8 @@ package com.blogapp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +28,12 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws UserAlreadyExistException {
+	public ResponseEntity<UserDto> createUser(@Valid@RequestBody UserDto userDto) throws UserAlreadyExistException {
 		return new ResponseEntity<UserDto>(this.userService.createUser(userDto), HttpStatus.OK);
 	}
 
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable("userId") Long userId)
+	public ResponseEntity<UserDto> updateUser(@Valid@RequestBody UserDto userDto,@PathVariable("userId") Long userId)
 			throws UserNotFoundException {
 		return new ResponseEntity<UserDto>(this.userService.updateUser(userDto, userId), HttpStatus.OK);
 	}

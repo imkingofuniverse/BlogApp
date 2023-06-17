@@ -31,16 +31,18 @@ public class GlobalExceptionHandler {
 				webRequest.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 	}
-
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Map<String, String> handleValidationsExceptionsForCustomerNotFound(MethodArgumentNotValidException e) {
-		Map<String, String> errors = new HashMap<String, String>();
-		e.getBindingResult().getAllErrors().forEach((error) -> {
-			String fieldName = ((FieldError) error).getField();
-			String errorMsg = error.getDefaultMessage();
-			errors.put(fieldName, errorMsg);
-		});
-		return errors;
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
 	}
+
+	
 }
