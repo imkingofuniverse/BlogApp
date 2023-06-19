@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.blogapp.dto.CommentDto;
 import com.blogapp.entity.Comment;
 import com.blogapp.entity.Post;
+import com.blogapp.exception.PostNotFoundException;
 import com.blogapp.repository.CommentRepository;
 import com.blogapp.repository.PostRepository;
 import com.blogapp.service.CommentService;
@@ -39,7 +40,7 @@ public class CommentServiceTestAddComment {
     }
 
     @Test
-    public void testCreateComment() {
+    public void testCreateComment() throws PostNotFoundException {
         // Arrange
         long postId = 1L;
 

@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.blogapp.dto.CommentDto;
 import com.blogapp.entity.Comment;
+import com.blogapp.exception.PostNotFoundException;
 import com.blogapp.repository.CommentRepository;
 import com.blogapp.service.impl.CommentServiceImpl;
 
@@ -36,7 +37,7 @@ public class CommentServiceTest {
 	
 	    
 	    @Test
-	    public void createComment() {
+	    public void createComment() throws PostNotFoundException {
 	        Mockito.doReturn(commentDto).when(commentRepository).save(Mockito.any());
 	        assertEquals(commentDto.getId(), commentServiceImpl.createComment(1,commentDto).getId());
 	        assertEquals(commentDto.getName(), commentServiceImpl.createComment(1,commentDto).getName());
