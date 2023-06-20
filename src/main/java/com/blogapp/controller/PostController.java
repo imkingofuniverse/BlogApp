@@ -21,7 +21,7 @@ import com.blogapp.service.PostService;
 import com.blogapp.utils.AppConstants;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/userpost")
 public class PostController {
 	
 	@Autowired
