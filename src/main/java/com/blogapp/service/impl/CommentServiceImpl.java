@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +20,20 @@ import com.blogapp.service.CommentService;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-
+	
+	@Autowired
     private CommentRepository commentRepository;
+	
+	@Autowired
     private PostRepository postRepository;
+	
+	@Autowired
     private ModelMapper mapper;
-    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, ModelMapper mapper) {
-        this.commentRepository = commentRepository;
-        this.postRepository = postRepository;
-        this.mapper = mapper;
-    }
+//    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, ModelMapper mapper) {
+//        this.commentRepository = commentRepository;
+//        this.postRepository = postRepository;
+//        this.mapper = mapper;
+//    }
 
     @Override
     public CommentDto createComment(long postId, CommentDto commentDto) throws PostNotFoundException {
