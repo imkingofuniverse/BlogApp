@@ -2,6 +2,8 @@ package com.blogapp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,7 @@ public class CommentController {
 
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable(value = "postId") long postId,
-                                                    @RequestBody CommentDto commentDto) throws PostNotFoundException{
+                                                    @RequestBody @Valid CommentDto commentDto) throws PostNotFoundException{
         return new ResponseEntity<>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
     }
 
