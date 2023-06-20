@@ -43,6 +43,14 @@ public class GlobalExceptionHandler {
         });
         return errors;
 	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ApiResponse> resousceNotFoundException(ResourceNotFoundException ex){
+		String mesg=ex.getMessage();
+		ApiResponse s=new ApiResponse(mesg,false);
+		return new ResponseEntity<ApiResponse>(s,HttpStatus.NOT_FOUND);
+		
+	}
 
 	
 }
