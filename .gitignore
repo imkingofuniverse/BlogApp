@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/java/com/blogapp/.BlogAppApplication.java.swp
+src/main/java/com/blogapp/.BlogAppApplication_BASE_1795.java.swp
+src/main/java/com/blogapp/.BlogAppApplication_LOCAL_1795.java.swp
+src/main/java/com/blogapp/.BlogAppApplication_REMOTE_1795.java.swp
