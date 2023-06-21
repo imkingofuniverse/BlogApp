@@ -10,18 +10,20 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blogapp.dto.UserLoginDto;
+import com.blogapp.dto.UserDto;
+import com.blogapp.dto.UserResponseDto;
 import com.blogapp.exception.UserAlreadyExistException;
 import com.blogapp.payload.JwtAuthRequest;
 import com.blogapp.payload.JwtAuthResponse;
 import com.blogapp.security.JwtTokenHelper;
 import com.blogapp.service.UserService;
-
+@CrossOrigin(origins="http://localhost:4200/")
 @RestController
 @RequestMapping("/user/auth")
 public class AuthController {
@@ -66,9 +68,9 @@ public class AuthController {
 	
 	//register new user
 	@PostMapping("/signup")
-	public ResponseEntity<UserLoginDto> registerUser(@Valid@RequestBody UserLoginDto userDto) throws UserAlreadyExistException{
-		System.out.println(userDto);
-		UserLoginDto registeredUser=this.userService.registerNewUser(userDto);
-		return new ResponseEntity<UserLoginDto>(registeredUser,HttpStatus.CREATED);
+	public ResponseEntity<UserResponseDto> registerUser(@Valid@RequestBody UserDto userDto) throws UserAlreadyExistException{
+		//System.out.println(userDto);
+		UserResponseDto registeredUser=this.userService.registerNewUser(userDto);
+		return new ResponseEntity<UserResponseDto>(registeredUser,HttpStatus.CREATED);
 	}
 }

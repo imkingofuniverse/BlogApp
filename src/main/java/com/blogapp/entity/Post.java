@@ -42,7 +42,7 @@ public class Post {
 	private Set<Comment> comments = new HashSet<>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	private User user;
 
 }

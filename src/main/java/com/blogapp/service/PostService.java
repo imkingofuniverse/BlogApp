@@ -2,10 +2,11 @@ package com.blogapp.service;
 
 import com.blogapp.dto.PostDto;
 import com.blogapp.dto.PostResponse;
+import com.blogapp.exception.UserNotFoundException;
 
 public interface PostService {
 
-	public PostDto createPost(PostDto postDto);
+	public PostDto createPost(PostDto postDto, Long id) throws UserNotFoundException ;
 	
 	public PostDto getPostById(long id);
 	
