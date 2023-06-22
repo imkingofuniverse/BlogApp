@@ -43,6 +43,7 @@ public class CommentServiceTestAddComment {
     public void testCreateComment() throws PostNotFoundException {
         // Arrange
         long postId = 1L;
+        System.out.println("*******************************************************");
 
         CommentDto mockCommentDto = new CommentDto();
         // Set properties of mockCommentDto
@@ -50,7 +51,8 @@ public class CommentServiceTestAddComment {
         mockCommentDto.setName("Ram");
         mockCommentDto.setEmail("ram@gmail.com");
         mockCommentDto.setContent("nice post");
-
+        System.out.println(mockCommentDto.getName());
+        
         Comment mockComment = new Comment();
         // Set properties of mockComment
         mockComment.setId(1L);
@@ -74,6 +76,7 @@ public class CommentServiceTestAddComment {
 
         // Assert
         assertEquals(mockCommentDto, result);
+        System.out.println(mockCommentDto.getEmail() + " ********** " + result.getEmail());
 //        assertEquals(mockPost, mockComment.getPost());
 //        verify(postRepository).findById(postId);
 //        verify(commentRepository).save(any(Comment.class));

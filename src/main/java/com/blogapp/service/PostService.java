@@ -2,6 +2,9 @@ package com.blogapp.service;
 
 import com.blogapp.dto.PostDto;
 import com.blogapp.dto.PostResponse;
+import com.blogapp.entity.Post;
+
+import java.util.List;
 
 public interface PostService {
 
@@ -14,5 +17,9 @@ public interface PostService {
 	public PostDto updatePost(PostDto postDto, long id);
 	
 	public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir);
+
+
+	public List<Post> getAllPosts();
+
 	
 }

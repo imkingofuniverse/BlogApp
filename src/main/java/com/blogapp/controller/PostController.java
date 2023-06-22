@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 import com.blogapp.dto.PostDto;
 import com.blogapp.dto.PostResponse;
+import com.blogapp.entity.Post;
 import com.blogapp.service.PostService;
 import com.blogapp.utils.AppConstants;
 
+@CrossOrigin(value = "http://localhost:60360/")
 @RestController
 @RequestMapping("/api/v1")
 public class PostController {
@@ -31,6 +35,11 @@ public class PostController {
     public ResponseEntity<PostDto> createPost(@RequestBody @Valid PostDto postDto) {
         System.out.println(postDto);
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
+    }
+    
+    @GetMapping("/post")
+    public ResponseEntity<List<Post>> getAllPosts(){
+        return new ResponseEntity<List<Post>>(postService.getAllPosts(),HttpStatus.OK);
     }
     
     @GetMapping("/post/{id}")
