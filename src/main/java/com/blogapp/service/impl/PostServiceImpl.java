@@ -49,6 +49,10 @@ public class PostServiceImpl implements PostService {
 
         return post;
     }
+	
+	public List<Post> getPostByCategory(String category) {
+		return postRepository.getPostByCategory(category);
+	}
 
 	@Override
 	public PostDto getPostById(long id) {
