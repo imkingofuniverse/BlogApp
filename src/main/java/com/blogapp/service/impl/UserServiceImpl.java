@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 	private RoleRepository roleRepo;
 
 	@Override
-	public UserResponseDto registerNewUser(UserDto userDto) throws UserAlreadyExistException {
+	public UserResponseDto registerNewUser(final UserDto userDto) throws UserAlreadyExistException {
 		User user = this.modelMapper.map(userDto, User.class);
 		if (this.userRepo.findByEmail(user.getEmail()).isPresent()) {
 			throw new UserAlreadyExistException("User already exist for email ID: " + user.getEmail());
@@ -52,6 +52,8 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	
+
 //	@Override
 //	public UserLoginDto createUser(UserLoginDto userDto) throws UserAlreadyExistException {
 //		User user = this.dtoToUser(userDto);
@@ -65,34 +67,35 @@ public class UserServiceImpl implements UserService {
 //	}
 
 	@Override
-	public UserResponseDto updateUser(UserResponseDto updateUserDto, Long userId)
-			throws UserNotFoundException, UserAlreadyExistException {
+	public UserResponseDto updateUser(final UserResponseDto updateUserDto, final Long userId)
+			throws UserNotFoundException {
+//
+//		if (this.userRepo.findByEmail(updateUserDto.getEmail()).isPresent()) {
+//			throw new UserAlreadyExistException("User already exist for email ID: " + updateUserDto.getEmail());
+//		}
+//		else {
 
-		if (this.userRepo.findByEmail(updateUserDto.getEmail()).isPresent()) {
-			throw new UserAlreadyExistException("User already exist for email ID: " + updateUserDto.getEmail());
-		} else {
+		User user = userRepo.findById(userId)
+				.orElseThrow(() -> new UserNotFoundException("User not found for userId: " + userId));
+		user.setFirstName(updateUserDto.getFirstName());
+		user.setLastName(updateUserDto.getLastName());
+		user.setEmail(updateUserDto.getEmail());
+		user.setBio(updateUserDto.getBio());
 
-			User user = userRepo.findById(userId)
-					.orElseThrow(() -> new UserNotFoundException("User not found for userId: " + userId));
-			user.setFirstName(updateUserDto.getFirstName());
-			user.setLastName(updateUserDto.getLastName());
-			user.setEmail(updateUserDto.getEmail());
-			user.setBio(updateUserDto.getBio());
-
-			User updatedUser = userRepo.save(user);
-			return this.userToDto(updatedUser);
-		}
+		User updatedUser = userRepo.save(user);
+		return this.userToDto(updatedUser);
+//		}
 	}
 
 	@Override
-	public UserResponseDto getUserById(Long userId) throws UserNotFoundException {
+	public UserResponseDto getUserById(final Long userId) throws UserNotFoundException {
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new UserNotFoundException("User not found for user ID: " + userId));
 		return this.modelMapper.map(user, UserResponseDto.class);
 	}
 
 	@Override
-	public UserResponseDto getUserByEmail(String email) throws UserNotFoundException {
+	public UserResponseDto getUserByEmail(final String email) throws UserNotFoundException {
 		User user = this.userRepo.findByEmail(email)
 				.orElseThrow(() -> new UserNotFoundException("User not found for email ID: " + email));
 		return this.modelMapper.map(user, UserResponseDto.class);
@@ -111,17 +114,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deleteUser(Long userId) throws UserNotFoundException {
+	public void deleteUser(final Long userId) throws UserNotFoundException {
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new UserNotFoundException("User not found for userId: " + userId));
 		user.getPost().clear();
 		user.getRoles().clear();
 		userRepo.deleteById(userId);
 //		this.userRepo.delete(user);
-		return "User deleted successfully";
+		
 	}
 
-	private UserResponseDto userToDto(User user) {
+	private UserResponseDto userToDto(final User user) {
 		UserResponseDto userDto = this.modelMapper.map(user, UserResponseDto.class);
 		return userDto;
 	}

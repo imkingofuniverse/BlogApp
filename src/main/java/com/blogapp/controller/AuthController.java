@@ -23,7 +23,8 @@ import com.blogapp.payload.JwtAuthRequest;
 import com.blogapp.payload.JwtAuthResponse;
 import com.blogapp.security.JwtTokenHelper;
 import com.blogapp.service.UserService;
-@CrossOrigin(origins="http://localhost:4200/")
+
+@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequestMapping("/user/auth")
 public class AuthController {
@@ -36,12 +37,12 @@ public class AuthController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private UserService userService;
 
 	@PostMapping("/login")
-	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
+	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody final JwtAuthRequest request) throws Exception {
 
 		this.authenticate(request.getUsername(), request.getPassword());
 		UserDetails userDetails = this.userDetailsSerrvice.loadUserByUsername(request.getUsername());
@@ -51,7 +52,7 @@ public class AuthController {
 		return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
 	}
 
-	private void authenticate(String username, String password) throws Exception {
+	private void authenticate(final String username, final String password) throws Exception {
 
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				username, password);
@@ -63,14 +64,15 @@ public class AuthController {
 		}
 
 	}
-	
-	
-	
-	//register new user
+
+	// register new user
 	@PostMapping("/signup")
-	public ResponseEntity<UserResponseDto> registerUser(@Valid@RequestBody UserDto userDto) throws UserAlreadyExistException{
-		//System.out.println(userDto);
-		UserResponseDto registeredUser=this.userService.registerNewUser(userDto);
-		return new ResponseEntity<UserResponseDto>(registeredUser,HttpStatus.CREATED);
+	public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody final UserDto userDto)
+			throws UserAlreadyExistException {
+		// System.out.println(userDto);
+		UserResponseDto registeredUser = this.userService.registerNewUser(userDto);
+		return new ResponseEntity<UserResponseDto>(registeredUser, HttpStatus.CREATED);
 	}
+
+	
 }

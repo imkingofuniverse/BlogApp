@@ -8,18 +8,24 @@ import com.blogapp.exception.UserAlreadyExistException;
 import com.blogapp.exception.UserNotFoundException;
 
 public interface UserService {
-	//Create User
+	// Create User
 //	UserLoginDto createUser(UserLoginDto userDto) throws UserAlreadyExistException;
-	//Update User
-	UserResponseDto updateUser(UserResponseDto updateUserDto, Long userId) throws UserNotFoundException,UserAlreadyExistException;
-	//Get User By Id
+	// Update User
+	UserResponseDto updateUser(UserResponseDto updateUserDto, Long userId) throws UserNotFoundException;
+
+	// Get User By Id
 	UserResponseDto getUserById(Long userId) throws UserNotFoundException;
-	//Get User By Email
+
+	// Get User By Email
 	UserResponseDto getUserByEmail(String email) throws UserNotFoundException;
-	//Get all Users
+
+	// Get all Users
 	List<UserResponseDto> getAllUsers() throws UserNotFoundException;
-	//Delete User
-	String deleteUser(Long userId) throws UserNotFoundException;
-	
+
+	// Delete User
+	void deleteUser(Long userId) throws UserNotFoundException;
+
 	UserResponseDto registerNewUser(UserDto userDto) throws UserAlreadyExistException;
+
+	
 }

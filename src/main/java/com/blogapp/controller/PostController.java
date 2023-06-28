@@ -2,6 +2,8 @@ package com.blogapp.controller;
 
  
 
+import java.util.List;
+
 import javax.validation.Valid;
 
  
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blogapp.dto.PostDto;
 import com.blogapp.dto.PostResponse;
+import com.blogapp.entity.Post;
 import com.blogapp.exception.UserNotFoundException;
 import com.blogapp.service.PostService;
 import com.blogapp.utils.AppConstants;
@@ -31,7 +34,7 @@ import com.blogapp.utils.AppConstants;
  
 @CrossOrigin(origins="http://localhost:4200/")
 @RestController
-@RequestMapping("/userpost")
+@RequestMapping("/api/v1")
 public class PostController {
 
     @Autowired
@@ -43,6 +46,11 @@ public class PostController {
     public ResponseEntity<PostDto> createPost(@RequestBody @Valid PostDto postDto,@PathVariable Long id) throws UserNotFoundException {
         System.out.println(postDto);
         return new ResponseEntity<>(postService.createPost(postDto, id), HttpStatus.CREATED);
+    }
+    
+    @GetMapping("/post")
+    public ResponseEntity<List<Post>> getAllPosts(){
+        return new ResponseEntity<List<Post>>(postService.getAllPosts(),HttpStatus.OK);
     }
 
     @GetMapping("/post/{id}")
