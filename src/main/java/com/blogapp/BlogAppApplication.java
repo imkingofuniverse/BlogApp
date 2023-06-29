@@ -53,7 +53,7 @@ public class BlogAppApplication implements CommandLineRunner, WebMvcConfigurer {
 			List<Role> roles = List.of(role, role1);
 			List<Role> result = this.roleRepo.saveAll(roles);
 			result.forEach(r -> {
-				System.out.println(r.getName());
+//				System.out.println(r.getName());
 			});
 		} catch (Exception e) {
 
