@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.blogapp.config.AppConstants;
+import com.blogapp.dto.AdminDto;
+import com.blogapp.dto.AdminResponseDto;
 import com.blogapp.dto.UserDto;
 import com.blogapp.dto.UserResponseDto;
 import com.blogapp.entity.Role;
@@ -128,5 +130,21 @@ public class UserServiceImpl implements UserService {
 		UserResponseDto userDto = this.modelMapper.map(user, UserResponseDto.class);
 		return userDto;
 	}
+	@Override
+    public AdminResponseDto registerNewAdmin(final AdminDto adminDto) throws UserAlreadyExistException {
+        User admin = this.modelMapper.map(adminDto, User.class);
+        if (this.userRepo.findByEmail(admin.getEmail()).isPresent()) {
+            throw new UserAlreadyExistException("User already exists for email ID: " + admin.getEmail());
+        } else {
+            admin.setPassword(this.passwordEncoder.encode(admin.getPassword()));
+            Role adminRole = this.roleRepo.findById(AppConstants.ADMIN_USER).get();
+            admin.getRoles().add(adminRole);
+
+ 
+
+            User newAdmin = this.userRepo.save(admin);
+            return this.modelMapper.map(newAdmin, AdminResponseDto.class);
+        }
+    }
 
 }

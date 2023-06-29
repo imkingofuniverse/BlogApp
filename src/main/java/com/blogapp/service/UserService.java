@@ -2,6 +2,8 @@ package com.blogapp.service;
 
 import java.util.List;
 
+import com.blogapp.dto.AdminDto;
+import com.blogapp.dto.AdminResponseDto;
 import com.blogapp.dto.UserDto;
 import com.blogapp.dto.UserResponseDto;
 import com.blogapp.exception.UserAlreadyExistException;
@@ -21,6 +23,8 @@ public interface UserService {
 
 	// Get all Users
 	List<UserResponseDto> getAllUsers() throws UserNotFoundException;
+	
+	AdminResponseDto registerNewAdmin(final AdminDto adminDto) throws UserAlreadyExistException;
 
 	// Delete User
 	void deleteUser(Long userId) throws UserNotFoundException;
