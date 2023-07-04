@@ -13,6 +13,8 @@ http://localhost:9091/user/auth/signup/admin
 
 }
 
+*********************************************************************************************************
+
 Modules and Implementation:
 
 User management	Implement User Registration
@@ -37,5 +39,5 @@ Security and Authentication	Implement Security methods such as input validations
 Database Integration	
 	
 API Documentation and Testing	
-    Generate API Documentation using Swagger
+    	Generate API Documentation using Swagger	
 	Write Unit Tests
