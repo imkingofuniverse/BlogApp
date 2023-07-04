@@ -1,2 +1,14 @@
 Swagger UI:
 http://localhost:9091/swagger-ui/index.html#/user-controller/createUser
+
+
+Add Admin:
+http://localhost:9091/user/auth/signup/admin
+
+{
+    "firstName": "Moderator",
+    "lastName": "Name",
+    "email": "moderator@gmail.com",
+    "password": "moderator@123"
+
+}
